@@ -63,21 +63,21 @@ deplo%: ## deploy: deploy the app to heroku
 
 	@n-test smoke -H http://$(HEROKU_APP_STAGING).herokuapp.com --header "FT-Next-Backend-Key: $(FT_NEXT_BACKEND_KEY)" --browsers "chrome"
 
-	$(if $(HEROKU_APP_EU),\
-	  nht configure $(VAULT_NAME) $(HEROKU_APP_EU) --overrides REGION=EU \
-	)
+	$(if $(HEROKU_APP_EU),\   
+	  nht configure $(VAULT_NAME) $(HEROKU_APP_EU) --overrides REGION=EU \   
+	)   
 
-	$(if $(HEROKU_APP_US),\
-	  nht configure $(VAULT_NAME) $(HEROKU_APP_US) --overrides REGION=US \
-	)
+	$(if $(HEROKU_APP_US),\   
+	  nht configure $(VAULT_NAME) $(HEROKU_APP_US) --overrides REGION=US \   
+	)   
 
-	heroku pipelines:promote -a $(HEROKU_APP_STAGING)
-	heroku dyno:scale web=0 -a $(HEROKU_APP_STAGING)
+	heroku pipelines:promote -a $(HEROKU_APP_STAGING)   
+	heroku dyno:scale web=0 -a $(HEROKU_APP_STAGING)   
 
 heroku-postbuil%:
-	npm update
-	@if [ -e bower.json ]; then $(BOWER_INSTALL); fi
-	make build-production
-	make deploy-assets
-	npm prune --production #Need to explicitly run this so review apps are the same as production apps
+	npm update   
+	@if [ -e bower.json ]; then $(BOWER_INSTALL); fi   
+	make build-production   
+	make deploy-assets   
+	npm prune --production #Need to explicitly run this so review apps are the same as production apps   
 
